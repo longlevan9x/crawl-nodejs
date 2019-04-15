@@ -9,13 +9,15 @@ class StudentController {
     }
 
     getStudents(req, res) {
-        course.findAll(function (errD, results) {
+        course.findAll(function (errCourse, results) {
+            if (errCourse) {
+                console.log(errCourse);
+                return false;
+            }
             results.forEach(function (course, index) {
                 let qs = {
-                    course_code: course.code,
-                    total_student: 10
+                    course: course
                 };
-                console.log(constant.api_url.crawl_student_course);
                 request.get({url: constant.api_url.crawl_student_course, qs: qs}, function (err, result) {
                     console.log(result);
                 });
